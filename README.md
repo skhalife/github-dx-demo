@@ -24,11 +24,14 @@ Story path for this repo (roughly):
 - Navigate to the repo and talk about the functionality of it and purpose.  Near the start highlight the devcontainer.json and how it is used to create a codespace.  Launch the codespace and while it is spinning up navigate around the code to show the structure of the repo.
 - Open the repo in a codespace and launch the app, show the app running to describe the current data which is present and the associated API docs.
 - Create a new issue in the repo to capture an enhancement of adding password and location to the user model
+  - **OPTIONAL1** - Create a new issue to dynamically generate the user data
+  - **OPTIONAL2** - Create a new issue to add a query parameter to the API to specify the number of users to return
 - Show the issue in the project board and move it to the "In Progress" column, take ownership of the issue
 - create a branch for the created issue within the open codespace
 - Update the openapi.yaml file to add the new fields to the user model
 - Update the users.js file to add the new fields to the user data.  While here, add a few more users in the data, using comment prompt for Copilot to help with generating the data.
-  - **OPTIONAL** - Update the users.js file to dynamically generate the data using @faker-js/faker.  This will require adding the faker package to the package.json file and then updating the users.js file to use the faker package to generate the data.
+  - **OPTIONAL1** - Update the users.js file to dynamically generate the data using @faker-js/faker.  This will require adding the faker package to the package.json file and then updating the users.js file to use the faker package to generate the data.
+  - **OPTIONAL2** - Update the app to specify the number of users to return in the response.  This will require adding a query parameter to the route and then updating the users.js file to use the query parameter to determine how many users to return.
 - commit the changes to the branch and push the branch to the repo, create a PR for the changes.
 - Show the Actions which are running as part of the PR and note that the CI check fails due to dist not being up to date.
 - Run `npm run build` to update the dist folder and then push the changes to the branch.
