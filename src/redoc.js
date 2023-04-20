@@ -1,3 +1,5 @@
+// redoc.js:
+// This file defines the HTML for the ReDoc documentation page.
 
 const redoc = `
 <!DOCTYPE html>

@@ -26100,6 +26100,8 @@ module.exports = Yaml;
 /***/ 8297:
 /***/ ((module) => {
 
+// redoc.js:
+// This file defines the HTML for the ReDoc documentation page.
 
 const redoc = `
 <!DOCTYPE html>
@@ -26146,61 +26148,97 @@ module.exports = redoc;
 /***/ 6788:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
+// routes.js:
+// This file defines the routes for the users API.
+
 const express = __nccwpck_require__(1204);
 const router = express.Router();
 const { v4: uuidv4 } = __nccwpck_require__(5840);
-
 let { users } = __nccwpck_require__(9795);
 
+// Define a route to create a new user
 router.post('/users', (req, res) => {
+  // Extract the name, id, and emoji from the request body
   let { name } = req.body;
   let id = req.body.id || uuidv4();
   let emoji = req.body.emoji || '👋';
 
+  // Create a new user object with the extracted data
   let user = { id, name, emoji };
 
+  // Add the new user to the users array
   users.push(user);
+
+  // Send a response with the new user object and a 201 status code
   res.status(201).json(user);
 });
 
+// Define a route to get all users
 router.get('/users', (req, res) => {
+  // Send a response with the users array
   res.json(users);
 });
 
+// Define a route to get a specific user by ID
 router.get('/users/:id', (req, res) => {
+  // Extract the user ID from the request parameters
   let { id } = req.params;
+
+  // Find the user with the matching ID in the users array
   let user = users.find((user) => user.id === id);
+
+  // If no user is found, send a 404 error response
   if (!user) {
     res.status(404).send('User not found');
   } else {
+    // Otherwise, send a response with the user object
     res.json(user);
   }
 });
 
+// Define a route to update a specific user by ID
 router.put('/users/:id', (req, res) => {
+  // Extract the user ID and name from the request parameters and body
   let { id } = req.params;
   let { name } = req.body;
+
+  // Find the index of the user with the matching ID in the users array
   let userIndex = users.findIndex((user) => user.id === id);
+
+  // If no user is found, send a 404 error response
   if (userIndex === -1) {
     res.status(404).send('User not found');
   } else {
+    // Otherwise, create a new user object with the updated name and replace the old user object in the users array
     let user = { id, name };
     users[userIndex] = user;
+
+    // Send a response with the updated user object
     res.json(user);
   }
 });
 
+// Define a route to delete a specific user by ID
 router.delete('/users/:id', (req, res) => {
+  // Extract the user ID from the request parameters
   let { id } = req.params;
+
+  // Find the index of the user with the matching ID in the users array
   let userIndex = users.findIndex((user) => user.id === id);
+
+  // If no user is found, send a 404 error response
   if (userIndex === -1) {
     res.status(404).send('User not found');
   } else {
+    // Otherwise, remove the user object from the users array
     users.splice(userIndex, 1);
+
+    // Send a 204 status code to indicate success with no content
     res.sendStatus(204);
   }
 });
 
+// Export the router object for use in other files
 module.exports = router;
 
 
@@ -26209,6 +26247,12 @@ module.exports = router;
 /***/ 9795:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
+// users.js:
+// This file defines an array of test users, each with a unique ID generated using uuidv4.
+// The users array is exported for use in other modules.
+//
+
+// Import uuidv4 to generate unique IDs
 const { v4: uuidv4 } = __nccwpck_require__(5840);
 
 // Define test users
@@ -26237,6 +26281,7 @@ let users = [
   },
 ];
 
+// Export the users array
 module.exports = {
   users,
 };
@@ -26505,9 +26550,12 @@ module.exports = JSON.parse('{"100":"Continue","101":"Switching Protocols","102"
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
+// index.js:
+// This file defines the Express server and loads the routes from the routes.js file.
+
 const express = __nccwpck_require__(1204);
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const YAML = __nccwpck_require__(934);
 
 app.use(express.json());
@@ -26555,10 +26603,9 @@ async function indexPage() {
     </div>
   `;
 
-  let userTable = fetch('http://localhost:3000/api/users')
+  let userTable = fetch(`http://localhost:${port}/api/users`)
     .then((response) => response.json())
     .then((data) => {
-      // console.log('Success:', data);
       // use bootstrap to style the table
       let table = `
         <table class="table table-striped">
@@ -26612,24 +26659,30 @@ async function indexPage() {
   return response;
 }
 
+
 // Default route which serves link to API documentation
 app.get('/', async(req, res) => {
   // Log the request to the console with the source IP address, request method and URL
   console.log(`${req.ip} ${req.method} ${req.url}`);
   // log query parameters
   console.log(req.query);
+  // send the index page as the response
   res.send(await indexPage());
 });
 
 // serve openapi.yaml as openapi.json
 app.get('/openapi.json', (req, res) => {
+  // set the response header to indicate that the response is JSON
   res.setHeader('Content-Type', 'application/json');
+  // send the openapi.yaml file as JSON
   res.send(YAML.load('./src/openapi.yaml'));
 });
 
 // Serve redoc content
 app.get('/redoc', (req, res) => {
+  // set the response header to indicate that the response is HTML
   res.setHeader('Content-Type', 'text/html');
+  // send the redoc content as the response
   res.send(__nccwpck_require__(8297));
 });
 
@@ -26637,6 +26690,7 @@ app.get('/redoc', (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+
 
 })();
 

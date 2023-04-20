@@ -1,6 +1,9 @@
+// index.js:
+// This file defines the Express server and loads the routes from the routes.js file.
+
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const YAML = require('yamljs');
 
 app.use(express.json());
@@ -48,10 +51,9 @@ async function indexPage() {
     </div>
   `;
 
-  let userTable = fetch('http://localhost:3000/api/users')
+  let userTable = fetch(`http://localhost:${port}/api/users`)
     .then((response) => response.json())
     .then((data) => {
-      // console.log('Success:', data);
       // use bootstrap to style the table
       let table = `
         <table class="table table-striped">
@@ -105,24 +107,30 @@ async function indexPage() {
   return response;
 }
 
+
 // Default route which serves link to API documentation
 app.get('/', async(req, res) => {
   // Log the request to the console with the source IP address, request method and URL
   console.log(`${req.ip} ${req.method} ${req.url}`);
   // log query parameters
   console.log(req.query);
+  // send the index page as the response
   res.send(await indexPage());
 });
 
 // serve openapi.yaml as openapi.json
 app.get('/openapi.json', (req, res) => {
+  // set the response header to indicate that the response is JSON
   res.setHeader('Content-Type', 'application/json');
+  // send the openapi.yaml file as JSON
   res.send(YAML.load('./src/openapi.yaml'));
 });
 
 // Serve redoc content
 app.get('/redoc', (req, res) => {
+  // set the response header to indicate that the response is HTML
   res.setHeader('Content-Type', 'text/html');
+  // send the redoc content as the response
   res.send(require('./redoc'));
 });
 
@@ -130,3 +138,4 @@ app.get('/redoc', (req, res) => {
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });
+

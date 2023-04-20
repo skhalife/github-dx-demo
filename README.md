@@ -2,14 +2,39 @@
 
 Demo repository to show an integrated developer experience flow working with GitHub ecosystem components.
 
-## WIP
+## TODO
 
+This repository is a work in progress, the following items still need attention
+
+- [ ] Update the README story path to fill out with descriptive instructions for each step
+- [ ] Incorporate Actions development into the story path
+- [ ] Incorporate CodeQL development into the story path
+- [ ] Incorporate Secrets Scanning development into the story path
 - [ ] Create an Actions workflow to interact with submitted Issues and PRs
-- [ ] Complete "Using this Repository" section with narrative instructions
-- [ ] Complete updating README with useful information about this repository for reference
 - [ ] Update devcontainer configuration for a streamlined configuration to use with this repository
 - [ ] Populate with issue and PR template(s)
 - [ ] Create Actions workflows so that this can be a template repository and easily re-used
+
+## Using this Repository
+
+This repository is meant to use for demo purposes.
+
+Story path for this repo (roughly):
+
+- Navigate to the repo and talk about the functionality of it and purpose.  Near the start highlight the devcontainer.json and how it is used to create a codespace.  Launch the codespace and while it is spinning up navigate around the code to show the structure of the repo.
+- Open the repo in a codespace and launch the app, show the app running to describe the current data which is present and the associated API docs.
+- Create a new issue in the repo to capture an enhancement of adding password and location to the user model
+- Show the issue in the project board and move it to the "In Progress" column, take ownership of the issue
+- create a branch for the created issue within the open codespace
+- Update the openapi.yaml file to add the new fields to the user model
+- Update the users.js file to add the new fields to the user data.  While here, add a few more users in the data, using comment prompt for Copilot to help with generating the data.
+  - **OPTIONAL** - Update the users.js file to dynamically generate the data using @faker-js/faker.  This will require adding the faker package to the package.json file and then updating the users.js file to use the faker package to generate the data.
+- commit the changes to the branch and push the branch to the repo, create a PR for the changes.
+- Show the Actions which are running as part of the PR and note that the CI check fails due to dist not being up to date.
+- Run `npm run build` to update the dist folder and then push the changes to the branch.
+- Navigate to Repository rules to setup protection rules for the default branch
+- Merge the PR, show the actions running and container publishing to GHCR
+- Close the issue as completed, destroy codespace
 
 ---
 
