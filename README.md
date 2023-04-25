@@ -35,7 +35,7 @@ Story path for this repo (roughly):
 - commit the changes to the branch and push the branch to the repo, create a PR for the changes.
 - Show the Actions which are running as part of the PR and note that the CI check fails due to dist not being up to date.
 - Run `npm run build` to update the dist folder and then push the changes to the branch.
-- **OPTIONAL-ACTIONS** - - Create a new PR action to call testing and build actions in a desired order, rather than running them in parallel.
+- **OPTIONAL-ACTIONS** - Create a new PR action to call testing and build actions in a desired order, rather than running them in parallel.
 - Navigate to Repository rules to setup protection rules for the default branch
 - Merge the PR, show the actions running and container publishing to GHCR
 - Close the issue as completed, destroy codespace
