@@ -8,6 +8,10 @@ const YAML = require('yamljs');
 
 app.use(express.json());
 
+// Load database connection from db.js file
+const db = require('./db');
+db.authenticate();
+
 // Load routes from routes.js file
 const routes = require('./routes');
 app.use('/api', routes);
