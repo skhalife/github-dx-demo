@@ -5,6 +5,7 @@ Demo repository to show an integrated developer experience flow working with Git
 Expand `details` to see workshop contents
 
 <details>
+<summary>Click to Expand Workshop Contents</summary>
 
 ## TODO
 
@@ -23,6 +24,8 @@ This repository is a work in progress, the following items still need attention
 
 This repository is meant to use for demo purposes.
 
+<details>
+<summary>Story Path Overview</summary>
 Story path for this repo (roughly):
 
 - Navigate to the repo and talk about the functionality of it and purpose.  Near the start highlight the devcontainer.json and how it is used to create a codespace.  Launch the codespace and while it is spinning up navigate around the code to show the structure of the repo.
@@ -44,6 +47,8 @@ Story path for this repo (roughly):
 - Merge the PR, show the actions running and container publishing to GHCR
 - Close the issue as completed, destroy codespace
 
+</details>
+
 ## Demo Story
 
 ### Familiarize with the Repository
@@ -55,10 +60,13 @@ very basic information about the user, including name and an emoji.  The API end
 
 Enhancements and bug fix work against the application are tracked using GitHub Issues.  Creating issues for work provides visibility and historic context for the work being done.  In some cases, an issue would be filed against a repository for the maintainer(s) to pick up and work on.  In other cases, an issue would be filed against a repository for the community to pick up and work on.  In this case, we will be filing an issue against the repository for the maintainer(s) to pick up and work on (us).
 
-Create an issue of type `enhancement request`, with the title `Add password and location to user model`.  Add the following description to the issue:
+Create an issue of type `enhancement request`, with the title `Add password and location to user model`.
 
-```md
-The current user model provides very basic information about the user, including name and an emoji.  Add password and location to the user model to provide more information about the user.
+Add the following description to the issue:
+
+```plain
+The current user model provides very basic information about the user, including name and an emoji.
+Add password and location to the user model to provide more information about the user.
 ```
 
 ### Launch a Codespace
@@ -130,7 +138,7 @@ The application provides sample users with data via an API endpoint that can be 
       name: 'Jane Doe',
       emoji: '👩',
       password: 'password',
-      location: 'New York, NY'
+      location: 'New York'
     }
   ```
 
