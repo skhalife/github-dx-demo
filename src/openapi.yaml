@@ -22,6 +22,12 @@ components:
         emoji:
           type: string
           description: The user emoji
+        password:
+          type: string
+          description: The user's password
+        location:
+          type: string
+          description: The user's location
       required:
         - id
         - name

@@ -19,16 +19,22 @@ let users = [
     id: uuidv4(),
     name: 'Bramble Fright',
     emoji: '👻',
+    password: 'password',
+    location: 'London',
   },
   {
     id: uuidv4(),
     name: 'Sylvie Scream',
     emoji: '🎃',
+    password: 'password',
+    location: 'Paris',
   },
   {
     id: uuidv4(),
     name: 'Eve Eerie',
     emoji: '🧙',
+    password: 'password',
+    location: 'New York',
   },
 ];
 
