@@ -2,6 +2,10 @@
 
 Demo repository to show an integrated developer experience flow working with GitHub ecosystem components.
 
+Expand `details` to see workshop contents
+
+<details>
+
 ## TODO
 
 This repository is a work in progress, the following items still need attention
@@ -40,23 +44,7 @@ Story path for this repo (roughly):
 - Merge the PR, show the actions running and container publishing to GHCR
 - Close the issue as completed, destroy codespace
 
-## Content Modules
-
-### Codespaces
-
-### Issues, Projects & Pull Requests
-
-### Actions
-
-### Copilot
-
-### CodeQL
-
-### Dependabot
-
-### Secrets Scanning
-
-### Packages
+</details>
 
 ---
 
@@ -86,9 +74,23 @@ The [./src](./src/) directory contains the following files:
 - [openapi.yaml](./src/openapi.yaml): This file contains the OpenAPI specification for the UsersAPI. It is used to generate the API documentation.
 - [redoc.js](./src/redoc.js): This file contains the configuration for the ReDoc API documentation.  Relies on the openapi.yaml file.
 
-## Docker Packaging
+## Development
+
+This project uses [Node.js](https://nodejs.org/en/) and [Express](https://expressjs.com/) for the API application.  Easiest usage for development is to use Codespaces.  The repository is configured with a [devcontainer.json](./devcontainer.json) file which will automatically configure a Codespace with the required dependencies installed.
+
+Reference [app content](#app-content) for details on the application layout.  The [./src](./src/) directory contains the source code for the application.
+
+When making changes:
+
+- Run `npm run dev` to start the application in development mode
+- Test any changes with `npm test` and `npm run test::integration`.  Add new tests as needed.
+- Build the application with `npm run build` to update the [./dist](./dist/) directory with the latest changes.
+
+## Packaging
 
 This project is packaged using a Docker container for runtime distribution. :ship:
+
+The project source for the container is built from the minified source in the [./dist](./dist/) directory.
 
 To build the Docker container locally, follow these steps:
 

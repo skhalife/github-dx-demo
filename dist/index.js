@@ -90167,27 +90167,43 @@ async function indexPage() {
     .then((response) => response.json())
     .then((data) => {
       // use bootstrap to style the table
+      // Build the table headers and rows based on the data
+      // Table headers and rows should be dynamic based on the returned data
+
+      function tableHeaders(data) {
+        let headers = '';
+        for (let i = 0; i < data.length; i++) {
+          headers += `<th scope="col">${data[i]}</th>`;
+        }
+        return headers;
+      }
+
+      function tableRows(data) {
+        let rows = '';
+        for (let i = 0; i < data.length; i++) {
+          rows += `<td>${data[i]}</td>`;
+        }
+        return rows;
+      }
       let table = `
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Emoji</th>
-            </tr>
-          </thead>
-          <tbody>
+      <table class="table table-striped">
+        <thead>
       `;
 
-      for (let i = 0; i < data.length; i++) {
-        table += `
+      table += `
           <tr>
-            <th scope="row">${data[i].id}</th>
-            <td>${data[i].name}</td>
-            <td>${data[i].emoji}</td>
+            ${tableHeaders(Object.keys(data[0]))}
           </tr>
-        `;
-      }
+
+        </thead>
+        <tbody>
+    `;
+
+      table += `
+          <tr>
+            ${tableRows(Object.values(data[0]))}
+          </tr>
+      `;
 
       table += `
           </tbody>

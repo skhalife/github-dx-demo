@@ -15,10 +15,13 @@ components:
       properties:
         id:
           type: string
+          description: The user ID (unique)
         name:
           type: string
+          description: The user name
         emoji:
           type: string
+          description: The user emoji
       required:
         - id
         - name
