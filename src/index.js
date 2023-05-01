@@ -91,11 +91,13 @@ async function indexPage() {
         <tbody>
     `;
 
-      table += `
+      for (let i = 0; i < data.length; i++) {
+        table += `
           <tr>
-            ${tableRows(Object.values(data[0]))}
+            ${tableRows(Object.values(data[i]))}
           </tr>
-      `;
+        `;
+      }
 
       table += `
           </tbody>
