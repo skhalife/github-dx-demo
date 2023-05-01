@@ -7,6 +7,7 @@
     "codespace",
     "codespaces",
     "redoc",
-    "openapi"
+    "openapi",
+    "uuidv4"
   ]
 }
