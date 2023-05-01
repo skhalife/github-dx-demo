@@ -12,7 +12,6 @@
       "extensions": [
         "dbaeumer.vscode-eslint",
         "github.copilot",
-        "github.vscode-github-actions",
         "oderwat.indent-rainbow"
       ]
     }
