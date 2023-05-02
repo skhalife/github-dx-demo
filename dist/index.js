@@ -4357,13 +4357,13 @@ module.exports = setup;
 if (typeof process === 'undefined' || process.type === 'renderer' || process.browser === true || process.__nwjs) {
 	module.exports = __nccwpck_require__(8222);
 } else {
-	module.exports = __nccwpck_require__(5332);
+	module.exports = __nccwpck_require__(4874);
 }
 
 
 /***/ }),
 
-/***/ 5332:
+/***/ 4874:
 /***/ ((module, exports, __nccwpck_require__) => {
 
 /**
@@ -80574,7 +80574,7 @@ var _v3 = _interopRequireDefault(__nccwpck_require__(5122));
 
 var _v4 = _interopRequireDefault(__nccwpck_require__(9120));
 
-var _nil = _interopRequireDefault(__nccwpck_require__(5350));
+var _nil = _interopRequireDefault(__nccwpck_require__(5332));
 
 var _version = _interopRequireDefault(__nccwpck_require__(1595));
 
@@ -80640,7 +80640,7 @@ exports["default"] = _default;
 
 /***/ }),
 
-/***/ 5350:
+/***/ 5332:
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -89599,7 +89599,7 @@ module.exports = Yaml;
 // db.js
 // Export database connection using sequelize
 
-const Sequelize = __nccwpck_require__(8794);
+const { Sequelize } = __nccwpck_require__(8794);
 
 // Create connection to sqlite db
 const db = new Sequelize({
@@ -89607,8 +89607,28 @@ const db = new Sequelize({
   storage: 'users.sqlite',
 });
 
+const user = db.define('user', {
+  id: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+  },
+  name: Sequelize.STRING,
+  emoji: Sequelize.STRING,
+});
+
+// Authenticate connection
+db.authenticate();
+
+// Sync database
+(async() => {
+  await db.sync();
+})();
+
 // Export connection
-module.exports = db;
+module.exports = {
+  db,
+  user,
+};
 
 
 /***/ }),
@@ -89670,7 +89690,8 @@ module.exports = redoc;
 const express = __nccwpck_require__(1204);
 const router = express.Router();
 const { v4: uuidv4 } = __nccwpck_require__(5840);
-let { users } = __nccwpck_require__(9795);
+const { users } = __nccwpck_require__(9795);
+const db = __nccwpck_require__(7713);
 
 // Define a route to create a new user
 router.post('/users', (req, res) => {
@@ -89751,6 +89772,68 @@ router.delete('/users/:id', (req, res) => {
 
     // Send a 204 status code to indicate success with no content
     res.sendStatus(204);
+  }
+});
+
+// Define a route to add a new user to the database
+router.post('/db/users', async(req, res) => {
+  // Extract the name, id, and emoji from the request body
+  let { name } = req.body;
+  let id = req.body.id || uuidv4();
+  let emoji = req.body.emoji || '👋';
+
+  // Create a new user object with the extracted data
+  let user = { id, name, emoji };
+
+  // Add the new user to the database
+  await db.user.create(user);
+
+  // Send a response with the new user object and a 201 status code
+  res.status(201).json(user);
+});
+
+// Define a route to fetch a user from the database by name or ID
+router.get('/db/users', async(req, res) => {
+  // Extract the name and ID from the request query parameters
+  console.log(req.query);
+  let { name, id } = req.query;
+
+  // If the name is provided, fetch the user by name
+  if (name) {
+    // Fetch the user from the database by name
+    let query = "SELECT * FROM users WHERE name = '" + name + "'";
+
+    let user = await db.db.query(query,
+      {
+        type: db.user.SELECT,
+      });
+
+    // If no user is found, send a 404 error response
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      // Otherwise, send a response with the user object
+      res.json(user);
+    }
+  } else if (id) {
+    // If the ID is provided, fetch the user by ID
+    // Fetch the user from the database by ID
+    let user = await db.user.findAll({
+      where: {
+        id: id,
+      },
+    });
+
+    // If no user is found, send a 404 error response
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      // Otherwise, send a response with the user object
+      res.json(user);
+    }
+  } else {
+    // If neither the name nor ID is provided, send a 400 error response
+    res.status(400).send('Please provide a name or ID');
   }
 });
 
@@ -90115,10 +90198,6 @@ const port = process.env.PORT || 3000;
 const YAML = __nccwpck_require__(934);
 
 app.use(express.json());
-
-// Load database connection from db.js file
-const db = __nccwpck_require__(7713);
-db.authenticate();
 
 // Load routes from routes.js file
 const routes = __nccwpck_require__(6788);
