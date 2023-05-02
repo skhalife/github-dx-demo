@@ -9,6 +9,7 @@ const db = new Sequelize({
   storage: 'users.sqlite',
 });
 
+// Define user model
 const user = db.define('user', {
   id: {
     type: Sequelize.STRING,
