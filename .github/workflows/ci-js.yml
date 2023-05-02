@@ -1,14 +1,8 @@
 ---
-  name: javascript-ci
+  name: ci-javascript
 
   on:
-    pull_request:
-      branches:
-      - main
-      paths-ignore:
-      - '**.md'
-      - '.github/workflows/codeql.yml'
-      - './docs/**'
+    workflow_call:
 
   jobs:
     validation:
